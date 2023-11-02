@@ -1,34 +1,59 @@
-"use server"
+'use server';
 
-import { prisma } from "@/lib/db/prisma";
-import { UploadResultProps } from "@/lib/types/types";
+import { prisma } from '@/lib/db/prisma';
+import { ParsedResultsType, ScoreObjectType, UploadResultProps } from '@/lib/types/types';
 
 export const fetchClassStudents = async (value: string) => {
-  console.log('value is' + value);
   const response = await prisma.student.findMany({
     where: {
-      currentClass: value
-    }
+      currentClass: value,
+    },
   });
 
   return response;
-}
+};
 
+export const uploadResultAction = async ({ scores, formValues }: UploadResultProps) => {
+  const { currentSession, currentTerm, examination, subject } = formValues;
 
+  const existingResults = await prisma.result.findMany({
+    where: {
+      student: {
+        currentClass: formValues.class,
+      },
+    },
+  });
+  
+  const parsedResults: ParsedResultsType = JSON.parse(JSON.stringify(existingResults));
+  
+  parsedResults.forEach(async (result) => {
+    const { studentId, scoreObject, resultId } = result;
 
-export const uploadResultAction = async ({scores, formValues}: UploadResultProps) => {
-scores.forEach( (element) => {
-  // const response = await prisma.result.create({
-  //   data: {
-  //     studentId: element.studentId,
-  //     subject: formValues.subject,
-  //     term: formValues.term,
-  //     score: element.score,
-  //     class: formValues.class,
-  //     session: formValues.session,
-  //   }
-  // });
-  console.log(element.studentId, element.score, );
-})
-console.log(formValues.subject, formValues.term, formValues.class, formValues.session)
-}
+    const studentScore = scores.find((score) => score.studentId === studentId)?.score;
+
+    const updatedResult = scoreObject
+
+    const workSite = updatedResult[currentSession][currentTerm][examination]
+
+    const keyToCheck = subject
+
+    const isContainKey = workSite.some((item: any) => item.hasOwnProperty(keyToCheck))
+    // const isContainKey = workSite.some((item: any) => keyToCheck in item)
+
+    if(isContainKey && studentScore){
+      const index = workSite.findIndex((item: any) => item.hasOwnProperty(keyToCheck))
+      workSite[index][subject] = studentScore
+    }else if(!isContainKey && studentScore) {
+      workSite.push({[subject]: studentScore})
+    }
+
+    const finalResult = await prisma.result.update({
+      where: {
+        resultId,
+      },
+      data: {
+        scoreObject: updatedResult,
+      },
+    })
+  })
+};
