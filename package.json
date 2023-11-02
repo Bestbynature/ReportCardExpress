@@ -1,5 +1,5 @@
 {
-  "name": "nextmazon",
+  "name": "reportcardexpress",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -15,30 +15,33 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.15",
     "@mui/material": "^5.14.15",
+    "@mui/x-date-pickers": "^6.17.0",
     "@prisma/client": "^5.4.1",
     "@supabase/supabase-js": "^2.38.4",
     "daisyui": "^3.9.2",
+    "dayjs": "^1.11.10",
     "eslint-config-prettier": "^9.0.0",
-    "next": "^13.5.6",
+    "next": "latest",
     "next-auth": "^4.23.2",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.5",
     "prisma": "^5.4.1",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-hook-form": "^7.47.0",
     "uuid": "^9.0.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "@types/uuid": "^9.0.6",
-    "autoprefixer": "^10",
-    "eslint": "^8",
-    "eslint-config-next": "13.5.4",
-    "postcss": "^8",
-    "tailwindcss": "^3",
-    "typescript": "^5"
+    "autoprefixer": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest"
   }
 }
