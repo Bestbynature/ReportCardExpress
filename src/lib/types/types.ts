@@ -1,81 +1,160 @@
-import { Prisma } from '@prisma/client';
-import { prisma } from '../db/prisma';
-import { Session } from 'next-auth';
+import { SelectChangeEvent } from '@mui/material';
 
-export interface Product {
-  id: string;
-  name: string;
+export interface ImageCardLinkProps {
+  id: number;
+  href: string;
+  src: any;
+  alt: string;
+  title: string;
   description: string;
-  imageUrl: string;
-  price: number;
+}
+
+export interface RHFSelectProps {
+  label: string;
+  name: string;
+  options: { value: string; label: string }[];
+  value?: string;
+  onChange?: (event: SelectChangeEvent) => void;
+}
+
+export interface StudentType {
+  studentId: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  parentPhoneNumber?: string | null;
+  parentEmail: string;
+  currentClass: string;
+  currentSession: string;
+  age: number;
+  profilePhotoUrl?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface ProductCardProps {
-  products: Product[];
-}
-
-export interface PriceTagProps {
-  price: number;
-  className?: string;
-}
-
-export interface ProductPageProps {
-  params: {
-    id: string;
+export interface UploadResultProps {
+  scores: {
+    studentId: string;
+    score: string;
+  }[];
+  formValues: {
+    currentSession: string;
+    currentTerm: string;
+    examination: string;
+    class: string;
+    subject: string;
   };
 }
 
-export interface AddToCartButtonProps {
-  productId: string;
-  incrementProductQuantity: (productId: string) => Promise<void>;
+export interface ResultType {
+  resultId: string;
+  studentId: string;
+  scoreObject: any;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export type CartWithProducts = Prisma.CartGetPayload<{
-  include: {
-    items: {
-      include: {
-        product: true;
-      };
+export type SubjectScoreType = {
+  [key: string]: string;
+};
+
+export type ScoreObjectType = {
+  [academicYear: string]: {
+    [term: string]: {
+      [examinationType: string]: SubjectScoreType[];
     };
   };
-}>;
+};
 
-export type CartItemWithProducts = Prisma.CartItemGetPayload<{
-  include: {
-    product: true;
+export type ParsedResultsType = {
+  studentId: string;
+  scoreObject: ScoreObjectType;
+  resultId: string;
+}[];
+
+export type ExtendedParsedResultsType = {
+  studentId: string;
+  scoreObject: ScoreObjectType;
+  resultId: string;
+  student: {
+    firstName: string;
+    lastName: string;
+    profilePhotoUrl: string;
+    studentId: string;
+    gender: string;
   };
-}>
+}[];
 
-export type ShoppingCart =
-  | (CartWithProducts & {
-      size: number;
-      subtotal: number;
-    })
-  | null;
+export interface UploadButtonProps {
+  scores: {
+    studentId: string;
+    score: string;
+  }[];
+  formValues: {
+    currentSession: string;
+    currentTerm: string;
+    examination: string;
+    class: string;
+    subject: string;
+  };
+  uploadResultAction: ({ scores, formValues }: UploadResultProps) => Promise<void>;
+}
 
-  export interface ShoppingCartButtonprops {
-    cart: ShoppingCart | null;
-  }
+export type DownloadButtonProps = {
+  formValues: {
+    currentSession: string;
+    currentTerm: string;
+    examination: string;
+    class: string;
+    subject: string;
+  };
+  fetchClassResults: (formvalues: FormValuesType) => Promise<BasketType[] | BaseketType2[]>;
+  updateResult: (data: BasketType[] | BaseketType2[]) => void;
+}
 
-  export interface UserMenuButtonProps {
-    session: Session | null;
-  }
+export type FormValuesType = {
+  currentSession: string;
+  currentTerm: string;
+  examination: string;
+  class: string;
+  subject: string;
+};
 
-  export interface PaginationBarProps {
-    currentPage: number;
-    totalPage: number;
-  }
+export type ResultEnquiryProps = {
+  formValues?: {
+    currentSession: string;
+    currentTerm: string;
+    examination: string;
+    class: string;
+    subject: string;
+  };
+  handleFormChange?: (event: SelectChangeEvent) => void;
+  loadClassStudents?: (event: SelectChangeEvent) => void;
+  options: { value: string; label: string }[];
+};
 
-  export interface HomeProps {
-    searchParams: {
-      page: string;
-    }
-  }
+export type BasketType = {
+  student: {
+    firstName: string,
+    lastName: string,
+    profilePhotoUrl: string
+    studentId: string
+    gender: string
+  },
+  score: string
+};
 
-  export interface SearchPageProps {
-    searchParams: {
-     query: string;
-    }
-  }
+export type BaseketType2 = {
+  student: {
+    firstName: string,
+    lastName: string,
+    profilePhotoUrl: string
+    studentId: string
+    gender: string
+  },
+  scoreArray: ScoreArrayType[]
+}
+
+export type ScoreArrayType = {
+  [key: string]: string;
+}
