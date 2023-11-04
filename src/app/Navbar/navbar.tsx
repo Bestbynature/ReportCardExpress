@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import logo from '@/assets/logo-no-background.png';
 import { redirect } from 'next/navigation';
-import { getCart } from '@/lib/db/cart';
+// import { getCart } from '@/lib/db/cart';
 import ShoppingCartButton from './ShoppingCartButton';
 import UserMenuButton from './UserMenuButton';
 import { getServerSession } from 'next-auth';
@@ -23,7 +23,7 @@ const Navbar = async () => {
 
   const session = await getServerSession(authOptions);
 
-  const cart = await getCart();
+  // const cart = await getCart();
 
   return (
     <div className="bg-base-300 w-full">
@@ -31,20 +31,26 @@ const Navbar = async () => {
         <div className="flex-1 ">
           <Link href="/" className="btn btn-ghost text-xl normal-case">
             <Image src={logo} alt="Nextmazon Logo" width={50} height={50} title="NextMazon Logo" />
-            NextMazon
+            ReportCard
           </Link>
         </div>
 
         <div className='flex flex-col md:flex-row'>
         <div>
+          <Link href="/all-students" className="btn btn-ghost">
+            Students
+          </Link>
           <Link href="/" className="btn btn-ghost">
-            Products
+            Home
           </Link>
-          <Link href="/cart" className="btn btn-ghost">
-            Cart
+          <Link href="/add-student" className="btn btn-ghost">
+            Add Student
           </Link>
-          <Link href="/add-product" className="btn btn-ghost">
-            Add Product
+          <Link href="/upload-result" className="btn btn-ghost">
+            Upload Result
+          </Link>
+          <Link href="/view-result" className="btn btn-ghost">
+            View Results
           </Link>
         </div>
 
@@ -59,7 +65,7 @@ const Navbar = async () => {
               />
             </div>
           </form>
-          <ShoppingCartButton cart={cart} />
+          {/* <ShoppingCartButton cart={cart} /> */}
           <UserMenuButton session={session} />
         </div>
         </div>
