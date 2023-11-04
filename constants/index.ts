@@ -1,3 +1,16 @@
-import { landingPageInfo } from "./landingpage";
+import { 
+  landingPageInfo,
+  subjects,
+  classes,
+  sessions,
+  terms,
 
-export { landingPageInfo };
+ } from "./landingpage";
+
+export { 
+  landingPageInfo,
+  subjects,
+  classes,
+  sessions,
+  terms 
+};
