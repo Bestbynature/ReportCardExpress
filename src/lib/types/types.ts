@@ -66,6 +66,16 @@ export type ScoreObjectType = {
   };
 };
 
+export type ScoreObjectType2 = { 
+    [term: string]: {
+      [examinationType: string]: SubjectScoreType[];
+    };
+};
+
+export type ScoreObjectType3 = {
+  [examinationType: string]: SubjectScoreType[];
+}
+
 export type ParsedResultsType = {
   studentId: string;
   scoreObject: ScoreObjectType;
@@ -82,8 +92,23 @@ export type ExtendedParsedResultsType = {
     profilePhotoUrl: string;
     studentId: string;
     gender: string;
+    currentClass: string;
+    age: number;
   };
-}[];
+};
+
+export type ExtendedParsedResultsType2 = {
+  result: ScoreObjectType3 | SubjectScoreType[];
+  student: {
+    firstName: string;
+    lastName: string;
+    profilePhotoUrl: string;
+    studentId: string;
+    gender: string;
+    currentClass: string;
+    age: number;
+  };
+};
 
 export interface UploadButtonProps {
   scores: {
@@ -112,6 +137,16 @@ export type DownloadButtonProps = {
   updateResult: (data: BasketType[] | BaseketType2[]) => void;
 }
 
+export type DownloadStudentButtonProps = {
+  formValues: {
+    currentSession: string;
+    currentTerm: string;
+    examination: string;
+  };
+  fetchStudentResult: (formValues: FormValuesType2) => Promise<ExtendedParsedResultsType2>;
+  updateResult: (data: ExtendedParsedResultsType2) => void;
+}
+
 export type FormValuesType = {
   currentSession: string;
   currentTerm: string;
@@ -119,6 +154,13 @@ export type FormValuesType = {
   class: string;
   subject: string;
 };
+
+export type FormValuesType2 = {
+  currentSession: string;
+  currentTerm: string;
+  examination: string;
+};
+
 
 export type ResultEnquiryProps = {
   formValues?: {
@@ -158,3 +200,21 @@ export type BaseketType2 = {
 export type ScoreArrayType = {
   [key: string]: string;
 }
+
+export type SessionType = {
+  user: {
+    email: string;
+    id: string;
+    name: string;
+    image: string;
+  };
+  expires: string;
+} | null;
+
+
+export type TableRow = {
+  Subject: string;
+  "First CA": string ;
+  "Second CA": string;
+  "Terminal Examination": string;
+};
