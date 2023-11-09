@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import Navbar from './Navbar/navbar';
 import Footer from './Footer';
 import SessionProvider from './SessionProvider';
+import Welcome from '@/components/Welcome';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className} suppressHydrationWarning={true}>
         <SessionProvider>
           <Navbar />
+          <Welcome />
           <main className="p-4 m-auto max-w-[80%] min-w-[300px]">
             {children}
             </main>

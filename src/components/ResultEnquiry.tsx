@@ -1,13 +1,13 @@
 import React from 'react';
 import { RHFSelect } from './RHFSelect';
 import { sessions, terms } from '../../constants';
-import { classes, examinations, subjects } from '../../constants/landingpage';
+import { classes, subjects } from '../../constants/landingpage';
 import { ResultEnquiryProps } from '@/lib/types/types';
 
 
 
 
-const ResultEnquiry = ({formValues, handleFormChange, loadClassStudents}: ResultEnquiryProps) => {
+const ResultEnquiry = ({formValues, handleFormChange, loadClassStudents, options}: ResultEnquiryProps) => {
   return (
     <>
       <RHFSelect
@@ -27,7 +27,7 @@ const ResultEnquiry = ({formValues, handleFormChange, loadClassStudents}: Result
       />
 
       <RHFSelect
-        options={examinations}
+        options={options}
         value={formValues?.examination}
         label="Examination"
         name="examination"
@@ -39,7 +39,7 @@ const ResultEnquiry = ({formValues, handleFormChange, loadClassStudents}: Result
         value={formValues?.class}
         label="Class"
         name="class"
-        onChange={loadClassStudents}
+        onChange={loadClassStudents || handleFormChange}
       />
 
       <RHFSelect

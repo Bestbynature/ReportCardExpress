@@ -1,11 +1,13 @@
 import AddStudent from '../src/assets/add-a-student-image.jpg'
 import DownloadResult from '../src/assets/upload-happy-image.jpg'
 import UploadResult from '../src/assets/view-and-download-result.jpg'
+import Student from '../src/assets/profile_placeholder.png'
 
 export const landingPageInfo = [
-  {id: 1, href: '/add-student', src: AddStudent, alt: 'Add a Student', title: 'Add a new Student', description: 'Add a new student to the database by provvalueing the student\'s label, email, and phone number. You can also add a photo of the student.'},
-  {id: 2, href: '/view-result', src: DownloadResult, alt: 'Download Result', title: 'Download Result', description: 'Download the result of a student by provvalueing the student\'s label, email, and phone number. You can also add a photo of the student.'},
-  {id: 3, href: '/upload-result', src: UploadResult, alt: 'Upload Result', title: 'Upload Result', description: 'Upload the result of a student by provvalueing the student\'s label, email, and phone number. You can also add a photo of the student.'},
+  {id: 1, href: '/add-student-teacher', src: AddStudent, alt: 'Add a Student', title: 'Add a new Student', description: 'Add a new student to the database by providing the student\'s label, email, and phone number. You can also add a photo of the student.'},
+  {id: 2, href: '/view-class-result', src: DownloadResult, alt: 'Download Result', title: 'Download Result', description: 'Download the result of a student by providing the student\'s label, email, and phone number. You can also add a photo of the student.'},
+  {id: 3, href: '/upload-result', src: UploadResult, alt: 'Upload Result', title: 'Upload Result', description: 'Upload the result of a student by providing the student\'s label, email, and phone number. You can also add a photo of the student.'},
+  {id: 4, href: 'view-student-result', src: Student, alt: 'View Student Result', title: 'View Student Result', description: "Dear Student, you have worked hard and it's time to see your result. Click this card to view your uploaded result."},
 ]
 // rewrite this to use the type RHFSelectProps
 //  options: { value: string, label: string}

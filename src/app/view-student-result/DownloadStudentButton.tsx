@@ -29,7 +29,7 @@ const DownloadStudentResultButton = ({ formValues, fetchStudentResult, updateRes
       <CloudDownloadIcon />
       </button>
       {isPending && <span className="loading loading-spinner loading-md">Result is being fetched</span>}
-      {!isPending && success && <span className="text-green-500">Result is ready</span>}
+      {!isPending && success && <span className="text-green-500 ml-2">Action Completed</span>}
     </div>
   );
 };

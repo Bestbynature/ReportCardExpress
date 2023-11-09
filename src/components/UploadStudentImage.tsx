@@ -1,14 +1,28 @@
 'use client';
+
 import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { v4 as uuidv4 } from 'uuid';
 
-const UploadStudentImage = () => {
+type UploadPhotoProps = {
+  profilePhotoUrl?: string | null;
+  onImageChange?: (newImageUrl: string) => void
+};
+
+const UploadStudentImage = ({ profilePhotoUrl, onImageChange}: UploadPhotoProps) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>('');
   const [imagePreview, setImagePreview] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [uploading, setUploading] = useState(false); 
+
+  useEffect(() => {
+    if (profilePhotoUrl) {
+      setImageUrl(profilePhotoUrl);
+      setImagePreview(profilePhotoUrl);
+    }
+  }, [profilePhotoUrl]);
 
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -17,11 +31,21 @@ const UploadStudentImage = () => {
 
     setImageUrl(data.publicUrl);
     setErrorMessage('Image uploaded successfully');
+    onImageChange && onImageChange(data.publicUrl)
+    setUploading(false)
   };
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUploading(true)
+    if(imageUrl){
+      const parts = imageUrl.split('/');
+      const previousImageName = parts[parts.length - 1];
+      const { data, error } = await supabase.storage.from('students-images').remove([`images/${previousImageName}`]);
+      if(error){
+        console.log(error)
+      }
+    }
     const file = e.target.files?.[0];
-    console.log(file?.type)
     if (!file) {
       setErrorMessage('No file selected');
       return;
@@ -41,7 +65,19 @@ const UploadStudentImage = () => {
     setImagePreview(imagePreview);
     setErrorMessage('Picture is being uploaded...');
 
-    const fileName = `${uuidv4()}-${file.name}`;
+    const filename = file.name.split('.')[0];
+    const fileExtension = file.name.split('.')[1];
+
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}-${(now.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
+    const formattedTime = `${now.getHours().toString().padStart(2, '0')}-${now
+      .getMinutes()
+      .toString()
+      .padStart(2, '0')}-${now.getSeconds().toString().padStart(2, '0')}`;
+
+    const fileName = `images/${formattedDate}-${formattedTime}-${filename}.${fileExtension}`;
 
     const { data, error } = await supabase.storage.from('students-images').upload(fileName, file, {
       cacheControl: '3600',
@@ -51,8 +87,9 @@ const UploadStudentImage = () => {
 
     if (error) {
       setImageUrl('');
+      setImagePreview('');
       console.log(error);
-      setErrorMessage('Error uploading image. Please try again');
+      setErrorMessage('Error uploading image. Please refresh the page before trying again');
     } else {
       const filePath = data.path;
 
@@ -62,6 +99,7 @@ const UploadStudentImage = () => {
 
   const handleFileSelect = () => {
     fileRef.current?.click();
+    setErrorMessage('');
   };
 
   return (
@@ -70,6 +108,10 @@ const UploadStudentImage = () => {
         <div
           className="flex flex-col items-center justify-center w-[200px] h-[200px] py-2 text-base font-medium text-black bg-blue-200 rounded-[50%] cursor-pointer hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           onClick={handleFileSelect}
+          style={{
+            cursor: uploading ? 'not-allowed' : 'pointer',
+            pointerEvents: uploading ? 'none' : 'auto',
+          }}
         >
           {imagePreview ? (
             <Image
@@ -78,6 +120,7 @@ const UploadStudentImage = () => {
               className="rounded-full"
               width={120}
               height={120}
+              priority
             />
           ) : (
             <>

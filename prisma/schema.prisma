@@ -7,42 +7,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product {
-  id          String     @id @default(uuid()) @db.VarChar(255)
-  name        String     
-  description String
-  price       Int
-  imageUrl    String
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  CartItem    CartItem[]
+model Student {
+  studentId         String   @id @default(uuid())
+  firstName         String
+  lastName          String
+  gender            String
+  parentPhoneNumber String?
+  parentEmail       String   @unique
+  currentClass      String
+  currentSession    String
+  age               Int
+  profilePhotoUrl   String?
+  role              String?  @default("student")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  results           Result[]
 
-  @@map("products")
+  @@map("students")
 }
 
-model Cart {
-  id        String     @id @default(uuid()) @db.VarChar(255)
-  items     CartItem[]
-  userId    String?
-  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+model Teacher {
+  teacherId String   @id @default(uuid())
+  firstName String
+  lastName  String
+  gender    String
+  role      String?  @default("teacher")
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@map("carts")
+  @@map("teachers")
 }
 
-model CartItem {
-  id        String  @id @default(uuid()) @db.VarChar(255)
-  productId String
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  quantity  Int
-  cartId    String
-  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+model Result {
+  resultId    String  @id @default(uuid())
+  scoreObject Json
+  studentId   String
+  student     Student @relation(fields: [studentId], references: [studentId], onDelete: Cascade)
 
-  @@unique([cartId, productId], name: "cartId_productId")
-  @@index([cartId], name: "cartId")
-  @@index([productId], name: "productId")
-  @@map("cart_items")
+  @@index([studentId], name: "student_result_Idx")
+  @@map("results")
 }
 
 model Account {
@@ -84,7 +88,6 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Cart          Cart[]
 
   @@map("users")
 }

@@ -7,7 +7,8 @@ import { updatedRecordSender } from './action';
 import { redirect } from 'next/navigation';
 
 
-const UpdateSendButton = (formState: StudentType2) => {
+const UpdateSendButton = ({formState
+}: StudentType2) => {
 
   const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState(false);
@@ -16,12 +17,13 @@ const UpdateSendButton = (formState: StudentType2) => {
     <div className="flex items-center gap-2 mt-3 w-full">
       <button
         className="btn btn-secondary"
+        disabled={isPending}
         onClick={() => {
           setSuccess(false);
           startTransition(async () => {
+        
             await updatedRecordSender(formState);
             setSuccess(true);
-            redirect('/all-students');
           });
         }}
       >

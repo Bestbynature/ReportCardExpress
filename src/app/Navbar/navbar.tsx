@@ -43,14 +43,17 @@ const Navbar = async () => {
           <Link href="/" className="btn btn-ghost">
             Home
           </Link>
-          <Link href="/add-student" className="btn btn-ghost">
+          <Link href="/add-student-teacher" className="btn btn-ghost">
             Add Student
           </Link>
           <Link href="/upload-result" className="btn btn-ghost">
             Upload Result
           </Link>
-          <Link href="/view-result" className="btn btn-ghost">
-            View Results
+          <Link href="/view-class-result" className="btn btn-ghost">
+            View Class Results
+          </Link>
+          <Link href="/view-student-result" className="btn btn-ghost">
+            View Student Results
           </Link>
         </div>
 

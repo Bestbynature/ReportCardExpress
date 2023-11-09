@@ -1,16 +1,22 @@
+"use server"
 import { prisma } from '@/lib/db/prisma';
 import Image from 'next/image';
+import { deleteStudent, editStudent } from './action';
+import DeleteComponent from './DeleteComponent';
+import EditComponent from './EditComponent';
 
 const AllStudentsPage = async () => {
+
   const students = await prisma.student.findMany({
     orderBy: { createdAt: 'desc' },
   });
+
 
   if (students.length < 1) return <div className="font-bold text-lg">No students found</div>;
 
   return (
     <div className="overflow-x-auto flex justify-center">
-      <table className="table max-w-[500px]">
+      <table className="table max-w-[600px]">
         <thead>
           <tr>
             <th>
@@ -18,13 +24,14 @@ const AllStudentsPage = async () => {
                 <input type="checkbox" className="checkbox" />
               </label>
             </th>
-            <th>Name</th>
+            <th className='text-center'>Picture and Name</th>
             <th>Date Registered</th>
+            <th className='text-center'>Action</th>
           </tr>
         </thead>
         <tbody>
           {students.map((student) => (
-            <tr key={student.studentId}>
+            <tr key={student.studentId} className='hover'>
               <th>
                 <label>
                   <input type="checkbox" className="checkbox" />
@@ -43,7 +50,7 @@ const AllStudentsPage = async () => {
                     </div>
                   </div>
                   <div>
-                    <div className="font-bold">{`${student.firstName} ${student.lastName[0]}.`}</div>
+                    <div className="font-bold">{`${student.firstName[0].toUpperCase().concat(student.firstName.slice(1))} ${student.lastName[0].toUpperCase().concat(student.lastName.slice(1))}`}</div>
                     <div className="text-sm opacity-50">{student.gender}</div>
                   </div>
                 </div>
@@ -54,6 +61,16 @@ const AllStudentsPage = async () => {
                 <span className="badge badge-ghost badge-sm">
                   {student.createdAt.toLocaleString()}
                 </span>
+              </td>
+              <td className='flex items-center justify-center gap-2'>
+                
+                <EditComponent id={student.studentId } editStudent={editStudent} />
+
+                <DeleteComponent
+                  studentId={student.studentId}
+                  deleteStudent={deleteStudent}
+                />
+                
               </td>
             </tr>
           ))}

@@ -12,27 +12,34 @@ import Image from 'next/image';
 import { RHFSelect } from '@/components/RHFSelect';
 import { sessions, terms } from '../../../constants';
 import { useState } from 'react';
-import { fetchStudentResult } from './action';
+import { fetchStudentResult, validateStudent } from './action';
 import DownloadStudentResultButton from './DownloadStudentButton';
 import { SelectChangeEvent } from '@mui/material';
 import { examinationsView } from '../../../constants/landingpage';
 import profile from '../../assets/profile_placeholder.png';
+import { useSession } from "next-auth/react"
+import { useRouter } from 'next/navigation';
 
 const StudentResultpage = () => {
+
   const [parsedResult, setParsedResult] = useState<ExtendedParsedResultsType2>();
   const [formValues, setFormValues] = useState({
     currentSession: '2023/2024',
     currentTerm: '',
     examination: '',
   });
+  const [studentStatus, setStudentStatus] = useState('');
 
   const handleFormChange = (event: SelectChangeEvent) => {
     const { name, value } = event.target;
     setFormValues((prevFormValues) => ({ ...prevFormValues, [name]: value }));
   };
 
-  const updateResult = (data: ExtendedParsedResultsType2) => {
-    setParsedResult(data);
+  const updateResult = (data: ExtendedParsedResultsType2 | null) => {
+    if(data){
+      setParsedResult(data);
+      setStudentStatus('');
+    }else setStudentStatus('Your email is not registered with us. Kindly contact the school to register your email')
   };
 
   const setTotal = () => {
@@ -57,7 +64,7 @@ const StudentResultpage = () => {
   const isExaminationSelected = !!formValues.examination;
   return (
     <>
-      <div>
+      <div className='max-w-[600px] m-auto'>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <RHFSelect
@@ -145,6 +152,7 @@ const StudentResultpage = () => {
           </>
         </>
       )}
+      {studentStatus && <p className='text-center font-bold text-red-500 text-xl mt-5'>{studentStatus}</p>}
     </>
   );
 };

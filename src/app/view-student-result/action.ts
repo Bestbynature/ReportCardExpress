@@ -6,15 +6,15 @@ import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { prisma } from "@/lib/db/prisma";
 
-const validateStudent = async () => {
+export const validateStudent = async () => {
   const session: SessionType = await getServerSession(authOptions);
-  if (!session) redirect('/api/auth/signin?callbackUrl=/add-student');
+  if (!session) redirect('/api/auth/signin?callbackUrl=/view-student-result');
 
   return session
 
 }
 
-export const fetchStudentResult = async ({currentSession, currentTerm, examination}: FormValuesType2):  Promise<ExtendedParsedResultsType2> => {
+export const fetchStudentResult = async ({currentSession, currentTerm, examination}: FormValuesType2):  Promise<ExtendedParsedResultsType2 | null> => {
 
   const studentSession = await validateStudent();
 
@@ -28,6 +28,8 @@ export const fetchStudentResult = async ({currentSession, currentTerm, examinati
       student: true,
     },
   });
+
+  if(!result) return null;
 
   const parsedResult: ExtendedParsedResultsType = JSON.parse(JSON.stringify(result));
   

@@ -1,6 +1,6 @@
 # 📗 Table of Contents
 - [📗 Table of Contents](#-table-of-contents)
-- [📖 NextMazon Ecommerce App](#-NextMazon-Ecommerce-App)
+- [📖 Report Card Express](#-NextMazon-Ecommerce-App)
   - [🛠 Built With ](#-built-with-)
     - [Tech Stack ](#tech-stack-)
     - [Key Features ](#key-features-)
@@ -22,7 +22,7 @@
 
 # 📖 NextMazon Ecommerce App<a name="NextMazon-Ecommerce-App"></a>
 
-This is a simple Ecommerce app built with Next JS, Prisma, Supabase and React. It is a simple app that allows users to add products to a database, view products in the database, view product details, add to cart and checkout. It also allows users to sign in and sign out of the app. Whether you're browsing for fashion, electronics, or any other product category, our e-commerce app built on Next.js, Tailwind CSS, Daisy UI, Prisma, PostgreSQL, and Supabase guarantees a user-friendly and secure shopping experience like never before. Shop with confidence, explore with ease & enjoy the convenience of our state-of-the-art platform.
+"ReportCardExpress is your one-stop solution for swiftly and conveniently uploading and distributing school students' academic results. This user-friendly web application streamlines the process of recording and sharing grades and report cards. It empowers educators and administrators to efficiently manage academic records, ensuring that students and parents have prompt access to their performance data. With ReportCardExpress, you can accelerate the grading process and foster improved communication and transparency within the educational community."
 
 ## 🛠 Built With <a name="built-with"></a>
 

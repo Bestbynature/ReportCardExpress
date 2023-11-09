@@ -15,6 +15,7 @@ const ImageCardLink = ({ href, src, alt, title, description }: ImageCardLinkProp
             alt={alt}
             width={800}
             height={400}
+            priority
             className="h-48 object-cover rounded-t-lg"
           />
         </figure>

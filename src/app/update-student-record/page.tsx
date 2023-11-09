@@ -9,6 +9,7 @@ import FormSubmit from '@/components/FormSubmit';
 import { StudentType } from '@/lib/types/types';
 import { classes, sessions } from '../../../constants';
 import UpdateSendButton from './UpdateSendButton';
+import { useSearchParams } from 'next/navigation'
 
 export interface EditPageProps {
   searchParams: {
@@ -25,37 +26,53 @@ export interface EditPageProps {
   };
 }
 
-const UpdateStudentComp = ({
-  searchParams: {
-    firstName,
-    lastName,
-    age,
-    gender,
-    parentEmail,
-    parentPhoneNumber,
-    profilePhotoUrl,
-    currentClass,
-    currentSession,
-    studentId,
-  },
-}: EditPageProps) => {
+const UpdateStudentComp = (
+//   {
+//   searchParams: {
+//     firstName,
+//     lastName,
+//     age,
+//     gender,
+//     parentEmail,
+//     parentPhoneNumber,
+//     profilePhotoUrl,
+//     currentClass,
+//     currentSession,
+//     studentId,
+//   },
+// }: EditPageProps
+) => {
+
+  const searchParams = useSearchParams()
+ 
+  const firstName = searchParams.get('firstName')
+  const lastName = searchParams.get('lastName')
+  const age = searchParams.get('age')
+  const gender = searchParams.get('gender')
+  const parentEmail = searchParams.get('parentEmail')
+  const parentPhoneNumber = searchParams.get('parentPhoneNumber')
+  const profilePhotoUrl = searchParams.get('profilePhotoUrl')
+  const currentClass = searchParams.get('currentClass')
+  const currentSession = searchParams.get('currentSession')
+  const studentId = searchParams.get('studentId')
 
   const [formState, setFormState] = React.useState({
-    firstName,
-    lastName,
-    parentEmail,
-    parentPhoneNumber,
-    currentClass,
-    currentSession,
-    age,
-    gender,
-    profilePhotoUrl,
+    firstName: firstName || '',
+    lastName: lastName || '',
+    parentEmail: parentEmail || '',
+    parentPhoneNumber: parentPhoneNumber || '',
+    currentClass: currentClass || '',
+    currentSession: currentSession || '',
+    age: age || '',
+    gender: gender || '',
+    profilePhotoUrl: profilePhotoUrl || '',
+    studentId: studentId || '',
   });
 
-  // const handleChange = (e: React.ChangeEvent) => {
-  //   const { name, value } = e.target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
+  const handleImageChange = (newImageUrl: string) => {
+    // Update the formState with the new imageUrl
+    setFormState({ ...formState, profilePhotoUrl: newImageUrl });
+  };
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -81,6 +98,12 @@ const UpdateStudentComp = ({
       value: formState.lastName,
     },
     {
+      name: 'StudentId',
+      placeholder: "Student's Id",
+      type: 'hidden',
+      value: formState.studentId || '',
+    },
+    {
       name: 'parentEmail',
       placeholder: "Student's parent email",
       type: 'email',
@@ -95,11 +118,15 @@ const UpdateStudentComp = ({
     { name: 'age', placeholder: "Student's age", type: 'number', value: formState.age },
   ];
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  }
+
   return (
     <div>
       <h1 className="mb-3 text-lg font-bold">Update a Student Record</h1>
-      <form>
-        <UploadStudentImage profilePhotoUrl={profilePhotoUrl} />
+      <form onSubmit={handleSubmit}>
+        <UploadStudentImage profilePhotoUrl={profilePhotoUrl} onImageChange={handleImageChange}/>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {formFields.map((field, index) => (
@@ -153,11 +180,7 @@ const UpdateStudentComp = ({
             </div>
           </span>
         </div>
-        <UpdateSendButton formState={(()=>{
-          const formStateData = {...formState, studentId}
-          return formStateData
-        })()} />
-        {/* <FormSubmit className="btn-block mt-3">Update Student Record</FormSubmit> */}
+        <UpdateSendButton formState={formState} />
       </form>
     </div>
   );
