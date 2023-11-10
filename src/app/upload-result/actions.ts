@@ -1,6 +1,9 @@
 'use server';
 
 import { prisma } from '@/lib/db/prisma';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
 import { ParsedResultsType, ScoreObjectType, UploadResultProps } from '@/lib/types/types';
 
 export const fetchClassStudents = async (value: string) => {
@@ -57,3 +60,14 @@ export const uploadResultAction = async ({ scores, formValues }: UploadResultPro
     })
   })
 };
+
+
+// export const validateUser = async () => {
+//   const session = getServerSession(authOptions);
+
+//   if (!session) {
+//     redirect('/api/auth/signin?callbackUrl=/upload-result');
+//   }
+
+//   return session;
+// };

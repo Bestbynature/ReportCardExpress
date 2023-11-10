@@ -13,7 +13,7 @@ export function RHFSelect(props: RHFSelectProps) {
   const { options, value, onChange, name, label } = props;
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box component={'div'} sx={{ minWidth: 120 }}>
       <FormControl fullWidth>
         <InputLabel>{label}</InputLabel>
         <Select

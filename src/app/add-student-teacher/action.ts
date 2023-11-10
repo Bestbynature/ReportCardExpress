@@ -1,8 +1,8 @@
 "use server"
 
 import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
 import { authOptions } from '../api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/db/prisma';
 
 export const addStudent = async (formData: FormData) => {
@@ -22,6 +22,9 @@ export const addStudent = async (formData: FormData) => {
   const gender = formData.get('gender')?.toString() || '';
   const profilePhotoUrl = formData.get('profilePhotoUrl')?.toString();
   const currentSession = formData.get('currentSession')?.toString();
+
+  
+
 
   try {
     if (

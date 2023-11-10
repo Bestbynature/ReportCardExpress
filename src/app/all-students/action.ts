@@ -34,10 +34,25 @@ export const deleteStudent = async (studentId: string) => {
     .from('students-images')
     .remove([`images/${fileName}`]);
 
-  console.log(data);
-  console.log(error);
+  // console.log(data);
+  // console.log(error);
   revalidatePath('/all-students');
 };
+
+export const deleteTeacher = async (teacherId: string) => {
+
+  console.log(teacherId);
+
+  await prisma.teacher.delete({
+    where: {
+      teacherId,
+    },
+  });
+
+  console.log('successfully deleted teacher')
+
+  revalidatePath('/all-students');
+}
 
 export const editStudent = async (studentId: string) => {
   const student = await prisma.student.findUnique({
@@ -65,3 +80,41 @@ export const editStudent = async (studentId: string) => {
     redirect(`/update-student-record?${queryParams}`);
   }
 };
+
+export const editTeacherRecord = async (teacherId: string) => {
+  const teacher = await prisma.teacher.findUnique({
+    where: {
+      teacherId,
+    },
+  })
+
+  if(teacher){
+    const { firstName, lastName, gender, role, email, teacherId } = teacher;
+
+    const queryParams = `firstName=${firstName}&lastName=${lastName}&gender=${gender}&role=${role}&email=${email}&teacherId=${teacherId}`;
+
+    redirect(`/update-teacher-record?${queryParams}`);
+  }
+}
+
+export const fetchTeachers = async () => {
+  const teachers = await prisma.teacher.findMany();
+
+  return teachers;
+}
+
+export const editTeacher = async (teacherId: string) => {
+  const teacher = await prisma.teacher.findUnique({
+    where: {
+      teacherId,
+    },
+  })
+
+  if(teacher){
+    const { firstName, lastName, gender, email, role, teacherId } = teacher;
+
+    const queryParams = `teacherId=${teacherId}&firstName=${firstName}&lastName=${lastName}&gender=${gender}&email=${email}&role=${role}`;
+
+    redirect(`/update-teacher-record?${queryParams}`);
+  }
+}

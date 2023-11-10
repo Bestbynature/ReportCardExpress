@@ -1,4 +1,5 @@
 import { SelectChangeEvent } from '@mui/material';
+import { Session } from 'next-auth';
 
 export interface ImageCardLinkProps {
   id: number;
@@ -66,7 +67,8 @@ export interface TeacherType {
   firstName: string;
   lastName: string;
   gender: string;
-  role: string;
+  role: string | null;
+  createdAt?: Date;
 }
 
 export interface UploadResultProps {
@@ -253,3 +255,7 @@ export type TableRow = {
   'Second CA': string;
   'Terminal Examination': string;
 };
+
+export interface UserMenuButtonProps {
+  session: Session | null;
+}

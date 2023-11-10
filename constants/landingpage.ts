@@ -2,12 +2,13 @@ import AddStudent from '../src/assets/add-a-student-image.jpg'
 import DownloadResult from '../src/assets/upload-happy-image.jpg'
 import UploadResult from '../src/assets/view-and-download-result.jpg'
 import Student from '../src/assets/profile_placeholder.png'
-
+import StudentandTeacher from '../src/assets/student-and-teacher-2.jpg'
 export const landingPageInfo = [
-  {id: 1, href: '/add-student-teacher', src: AddStudent, alt: 'Add a Student', title: 'Add a new Student', description: 'Add a new student to the database by providing the student\'s label, email, and phone number. You can also add a photo of the student.'},
-  {id: 2, href: '/view-class-result', src: DownloadResult, alt: 'Download Result', title: 'Download Result', description: 'Download the result of a student by providing the student\'s label, email, and phone number. You can also add a photo of the student.'},
-  {id: 3, href: '/upload-result', src: UploadResult, alt: 'Upload Result', title: 'Upload Result', description: 'Upload the result of a student by providing the student\'s label, email, and phone number. You can also add a photo of the student.'},
-  {id: 4, href: 'view-student-result', src: Student, alt: 'View Student Result', title: 'View Student Result', description: "Dear Student, you have worked hard and it's time to see your result. Click this card to view your uploaded result."},
+  {id: 1, href: '/add-student-teacher', src: AddStudent, alt: 'Add a Student', title: 'Add a new Student or Teacher', description: 'Add a new student or Teacher to the database by providing the  email, and phone number. You can also add a photo of the student.'},
+  {id: 2, href: '/view-class-result', src: DownloadResult, alt: 'Download Result', title: 'View Class Result', description: 'Download the result of a class by providing the class, session, term, and the type of examination.'},
+  {id: 3, href: '/upload-result', src: UploadResult, alt: 'Upload Result', title: 'Upload Result', description: 'Upload the result of a class by providing the class, session, term, the type of examination and scores of the students.'},
+  {id: 4, href: '/view-student-result', src: Student, alt: 'View Student Result', title: 'View Student Result', description: "Dear Student, you have worked hard and it's time to see your result. Click this card to view your uploaded result."},
+  {id: 5, href: '/all-students', src: StudentandTeacher, alt: "View Student and Teacher's list", title: "View Student and Teacher's list", description: "Click this card for a comprehensive overview of all students and teachers already in the database."},
 ]
 // rewrite this to use the type RHFSelectProps
 //  options: { value: string, label: string}

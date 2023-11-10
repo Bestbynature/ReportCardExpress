@@ -5,13 +5,12 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useTransition } from 'react';
 
 type DeleteStudentProp = {
-
-  
   studentId: string;
   deleteStudent: (studentId: string) => void;
+  updateScreen?: (studentId: string) => void;
 };
 
-const DeleteComponent = ({ studentId, deleteStudent }: DeleteStudentProp) => {
+const DeleteComponent = ({ studentId, deleteStudent, updateScreen }: DeleteStudentProp) => {
 
   const [isPending, startTransition] = useTransition();
 
@@ -24,7 +23,9 @@ const DeleteComponent = ({ studentId, deleteStudent }: DeleteStudentProp) => {
         () => {
           if (!isPending) {
             startTransition(async () => {
-              await deleteStudent(studentId);
+              const item = await deleteStudent(studentId);
+              updateScreen && updateScreen(studentId);
+
             });
           }
         }

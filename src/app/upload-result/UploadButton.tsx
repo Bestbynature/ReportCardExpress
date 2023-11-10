@@ -12,7 +12,7 @@ const UploadButton = ({ scores, formValues, uploadResultAction }: UploadButtonPr
   return (
     <div className="flex items-center gap-2 mt-3 w-full">
       <button
-        className="btn btn-secondary"
+        className="btn btn-secondary w-full"
         onClick={() => {
           setSuccess(false);
           startTransition(async () => {

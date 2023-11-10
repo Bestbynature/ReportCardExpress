@@ -1,21 +1,35 @@
-"use server"
+'use server';
 import { prisma } from '@/lib/db/prisma';
 import Image from 'next/image';
 import { deleteStudent, editStudent } from './action';
 import DeleteComponent from './DeleteComponent';
 import EditComponent from './EditComponent';
+import TeacherList from './TeacherList';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]/route';
+import { validateUser } from '../add-student-teacher/page';
+import Unauthorised from '@/components/Unauthorised';
 
 const AllStudentsPage = async () => {
+  const session = await getServerSession(authOptions);
+
+  const validity = session ? await validateUser(session) : 'noRole';
+
+  if (validity === 'noRole' || validity === 'studentRole') {
+    return <Unauthorised />;
+  }
 
   const students = await prisma.student.findMany({
     orderBy: { createdAt: 'desc' },
   });
 
-
-  if (students.length < 1) return <div className="font-bold text-lg">No students found</div>;
+  if (students.length < 1)
+    return <div className="font-bold text-lg text-center">No students found</div>;
 
   return (
-    <div className="overflow-x-auto flex justify-center">
+    <div className="overflow-x-auto flex flex-col justify-center items-center">
+      <TeacherList />
+
       <table className="table max-w-[600px]">
         <thead>
           <tr>
@@ -24,14 +38,14 @@ const AllStudentsPage = async () => {
                 <input type="checkbox" className="checkbox" />
               </label>
             </th>
-            <th className='text-center'>Picture and Name</th>
+            <th className="text-center">Picture and Name</th>
             <th>Date Registered</th>
-            <th className='text-center'>Action</th>
+            <th className="text-center">Action</th>
           </tr>
         </thead>
         <tbody>
           {students.map((student) => (
-            <tr key={student.studentId} className='hover'>
+            <tr key={student.studentId} className="hover">
               <th>
                 <label>
                   <input type="checkbox" className="checkbox" />
@@ -50,7 +64,11 @@ const AllStudentsPage = async () => {
                     </div>
                   </div>
                   <div>
-                    <div className="font-bold">{`${student.firstName[0].toUpperCase().concat(student.firstName.slice(1))} ${student.lastName[0].toUpperCase().concat(student.lastName.slice(1))}`}</div>
+                    <div className="font-bold">{`${student.firstName[0]
+                      .toUpperCase()
+                      .concat(student.firstName.slice(1))} ${student.lastName[0]
+                      .toUpperCase()
+                      .concat(student.lastName.slice(1))}`}</div>
                     <div className="text-sm opacity-50">{student.gender}</div>
                   </div>
                 </div>
@@ -62,15 +80,10 @@ const AllStudentsPage = async () => {
                   {student.createdAt.toLocaleString()}
                 </span>
               </td>
-              <td className='flex items-center justify-center gap-2'>
-                
-                <EditComponent id={student.studentId } editStudent={editStudent} />
+              <td className="flex items-center justify-center gap-2">
+                <EditComponent id={student.studentId} editStudent={editStudent} />
 
-                <DeleteComponent
-                  studentId={student.studentId}
-                  deleteStudent={deleteStudent}
-                />
-                
+                <DeleteComponent studentId={student.studentId} deleteStudent={deleteStudent} />
               </td>
             </tr>
           ))}

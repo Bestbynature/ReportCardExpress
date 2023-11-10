@@ -7,6 +7,7 @@ import ShoppingCartButton from './ShoppingCartButton';
 import UserMenuButton from './UserMenuButton';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/route';
+import MobileMenu from './MobileMenu';
 
 const searchProducts = async (formData: FormData) => {
   'use server';
@@ -23,10 +24,16 @@ const Navbar = async () => {
 
   const session = await getServerSession(authOptions);
 
+  const user = session?.user;
+
   // const cart = await getCart();
 
   return (
-    <div className="bg-base-300 w-full">
+    <>
+    <div className='sm:hidden'>
+      <MobileMenu user={user} />
+    </div>
+    <div className="bg-base-300 w-full hidden sm:block">
       <div className="navbar  max-w-[80%] min-w-[300px] m-auto flex-col lg:flex-row gap-2">
         <div className="flex-1 ">
           <Link href="/" className="btn btn-ghost text-xl normal-case">
@@ -38,13 +45,13 @@ const Navbar = async () => {
         <div className='flex flex-col md:flex-row'>
         <div>
           <Link href="/all-students" className="btn btn-ghost">
-            Students
+            View Students and Teachers
           </Link>
           <Link href="/" className="btn btn-ghost">
             Home
           </Link>
           <Link href="/add-student-teacher" className="btn btn-ghost">
-            Add Student
+            Add Student and Teacher
           </Link>
           <Link href="/upload-result" className="btn btn-ghost">
             Upload Result
@@ -68,12 +75,13 @@ const Navbar = async () => {
               />
             </div>
           </form>
-          {/* <ShoppingCartButton cart={cart} /> */}
           <UserMenuButton session={session} />
         </div>
         </div>
       </div>
     </div>
+    </>
+    
   );
 };
 
