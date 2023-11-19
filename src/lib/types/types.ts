@@ -24,7 +24,9 @@ export interface StudentType {
   lastName: string;
   gender: string;
   parentPhoneNumber?: string | null;
-  parentEmail: string;
+  // parentEmail: string;
+  userName: string;
+  admissionNumber: string;
   currentClass: string;
   currentSession: string;
   age: number;
@@ -40,7 +42,7 @@ export interface StudentType2 {
     lastName: string;
     gender: string;
     parentPhoneNumber?: string | null;
-    parentEmail: string;
+    admissionNumber: string;
     currentClass: string;
     currentSession: string;
     age: number | string;
@@ -54,7 +56,7 @@ export interface StudentType3 {
   lastName: string;
   gender: string;
   parentPhoneNumber?: string | null;
-  parentEmail: string;
+  admissionNumber: string;
   currentClass: string;
   currentSession: string;
   age: number | string;
@@ -211,6 +213,7 @@ export type ResultEnquiryProps = {
   handleFormChange?: (event: SelectChangeEvent) => void;
   loadClassStudents?: (event: SelectChangeEvent) => void;
   options: { value: string; label: string }[];
+  userRole?: string | null | undefined;
 };
 
 export type BasketType = {
