@@ -8,9 +8,15 @@ import { fetchClassResults } from './action';
 import Image from 'next/image';
 import DownloadButton from './DownloadButton';
 import { examinationsView } from '../../../constants/landingpage';
-import { signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import { lusitana } from '@/lib/fonts';
+import classImage from '../../assets/upload-happy-image.jpg';
 
-const ViewResultPage = () => {
+type ViewClassProp = {
+  userRole: string;
+};
+
+const ViewResultPage = ({ userRole }: ViewClassProp) => {
   const { data: session, status } = useSession();
 
   const [results, setResults] = useState<BasketType[] | BaseketType2[]>([]);
@@ -63,26 +69,32 @@ const ViewResultPage = () => {
 
   return (
     <div>
-      <h2 className="font-bold text-center mb-3 capitalize"> View Result Page</h2>
-      <p className="mb-5">
+      <h2 className={lusitana.className}> View Class Result Page</h2>
+      <p className="mb-5 font-mono">
         Please note that if you choose All exams under examination, the option will appear blank but
         it will give you the result for all the three exams
       </p>
 
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <ResultEnquiry
-            formValues={formValues}
-            handleFormChange={handleFormChange}
-            options={examinationsView}
-          />
-        </div>
+          <div>
+            <Image src={classImage} alt="class image" />
+          </div>
+          <div className="flex flex-col gap-4">
+            <ResultEnquiry
+              formValues={formValues}
+              handleFormChange={handleFormChange}
+              options={examinationsView}
+              userRole={userRole}
+            />
 
-        <DownloadButton
-          fetchClassResults={fetchClassResults}
-          formValues={formValues}
-          updateResult={updateResult}
-        />
+            <DownloadButton
+              fetchClassResults={fetchClassResults}
+              formValues={formValues}
+              updateResult={updateResult}
+            />
+          </div>
+        </div>
       </form>
 
       {results.length > 0 && (

@@ -9,7 +9,12 @@ import UploadButton from './UploadButton';
 import ResultEnquiry from '@/components/ResultEnquiry';
 import { useSession } from 'next-auth/react';
 
-const UploadResultpage = () => {
+type UserRoleProp = {
+  userRole: string | null | undefined;
+};
+
+const UploadResultpage = ({userRole}: UserRoleProp) => {
+
   const { data: session, status } = useSession();
 
   const [students, setStudents] = useState<StudentType[]>([]);
@@ -81,6 +86,7 @@ const UploadResultpage = () => {
           handleFormChange={handleFormChange}
           loadClassStudents={loadClassStudents}
           options={examinationsUpload}
+          userRole={userRole}
         />
       </div>
 

@@ -13,9 +13,9 @@ export const landingPageInfo = [
 // rewrite this to use the type RHFSelectProps
 //  options: { value: string, label: string}
 export const classes = [
- { value: 'PRY 1', label: 'PRY 1'},
-  { value: 'PRY 2', label: 'PRY 2'},
-  { value: 'PRY 3', label: 'PRY 3'},
+ { value: 'PRY 1', label: 'PRY 1', teacherEmail: 'teacher1@gmail.com'},
+  { value: 'PRY 2', label: 'PRY 2', teacherEmail: 'teacher2@gmail.com'},
+  { value: 'PRY 3', label: 'PRY 3', teacherEmail: 'teacher3@gmail.com'},
   { value: 'PRY 4', label: 'PRY 4'},
   { value: 'PRY 5', label: 'PRY 5'},
   { value: 'PRY 6', label: 'PRY 6'},

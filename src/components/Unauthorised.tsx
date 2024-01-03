@@ -22,11 +22,14 @@ const Unauthorised = () => {
         <h2>You are unable to use this resource because of one of three reasons:</h2>
         <br />
         <div className="flex flex-col items-center">
-          <p className="border-4 w-fit list-item p-2 my-2">
+        <p className="border-4 w-fit list-item p-2 my-2">
             You are registered as a teacher but you are currently not signed in.
           </p>
-          <p className="border-4 w-fit list-item p-2 my-2">{`You are registered as a student and so can't access a Teacher's resource. `}</p>
-          <p className="border-4 w-fit list-item p-2 my-2">{`You are not registered at all. Please contact your Class teacher. `}</p>
+          <p className="border-4 w-fit list-item p-2 my-2">
+            {`You are registered as a teacher but you are trying to access an Administrator's Resource.`}
+          </p>
+          <p className="border-4 w-fit list-item p-2 my-2">{`You are registered as a student and so can only view your result `}</p>
+          <p className="border-4 w-fit list-item p-2 my-2">{`You are not registered at all. Please contact the School Administrator. `}</p>
         </div>
 
         <div className="flex flex-col w-fit m-auto sm:gap-5 sm:flex-row">

@@ -17,8 +17,8 @@ const UserMenuButton = ({ session }: UserMenuButtonProps) => {
         src={user?.image || 'https://cdn.pixabay.com/photo/2020/07/14/13/07/icon-5404125_640.png'} // profilePicture
         alt="profile Picture"
         title='profile Picture'
-        width={40}
-        height={40}
+        width={50}
+        height={50}
         className="rounded-full w-10"
         /> : <AccountCircleIcon sx={{width: 50, height: 50, marginLeft: "1rem"}} />}
       </label>

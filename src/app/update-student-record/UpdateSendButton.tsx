@@ -14,9 +14,9 @@ const UpdateSendButton = ({formState
   const [success, setSuccess] = useState(false);
 
   return (
-    <div className="flex items-center gap-2 mt-3 w-full">
+    <div className="flex items-center gap-2 mt-3">
       <button
-        className="btn btn-secondary"
+        className="btn btn-secondary w-full"
         disabled={isPending}
         onClick={() => {
           setSuccess(false);

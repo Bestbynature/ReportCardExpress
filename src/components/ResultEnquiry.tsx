@@ -4,10 +4,7 @@ import { sessions, terms } from '../../constants';
 import { classes, subjects } from '../../constants/landingpage';
 import { ResultEnquiryProps } from '@/lib/types/types';
 
-
-
-
-const ResultEnquiry = ({formValues, handleFormChange, loadClassStudents, options}: ResultEnquiryProps) => {
+const ResultEnquiry = ({formValues, handleFormChange, loadClassStudents, options, userRole}: ResultEnquiryProps) => {
   return (
     <>
       <RHFSelect
@@ -35,7 +32,7 @@ const ResultEnquiry = ({formValues, handleFormChange, loadClassStudents, options
       />
 
       <RHFSelect
-        options={classes}
+        options={userRole === 'adminRole' ? classes : classes.filter((classItem) => classItem.teacherEmail === userRole)}
         value={formValues?.class}
         label="Class"
         name="class"

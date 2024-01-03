@@ -8,7 +8,7 @@ const CurrentPage = () => {
   const pathname = usePathname();
 
   return (
-    <div className={`${agbalumo.className} text-lg`}>You are currently on {pathname.slice(1)} page</div>
+    <div className={`${agbalumo.className} text-lg`}><p> You are currently on {pathname.length > 1 ? pathname.slice(1) : 'Home'} page </p></div>
   )
 }
 

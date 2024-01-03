@@ -31,6 +31,7 @@ const UploadStudentImage = ({ profilePhotoUrl, onImageChange}: UploadPhotoProps)
 
     setImageUrl(data.publicUrl);
     setErrorMessage('Image uploaded successfully');
+    // console.log('Image URL now available as ====>', data.publicUrl)
     onImageChange && onImageChange(data.publicUrl)
     setUploading(false)
   };
@@ -92,6 +93,8 @@ const UploadStudentImage = ({ profilePhotoUrl, onImageChange}: UploadPhotoProps)
       setErrorMessage('Error uploading image. Please refresh the page before trying again');
     } else {
       const filePath = data.path;
+
+      console.log('The filepath on the server is ===>', filePath)
 
       getPublicFileUrl(filePath);
     }

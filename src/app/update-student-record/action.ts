@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 
 export const updatedRecordSender = async (formState: StudentType3) => {
 
-  const { studentId, firstName, lastName, gender, parentPhoneNumber, parentEmail, currentClass, currentSession, age, profilePhotoUrl } = formState;
+  const { studentId, firstName, lastName, gender, parentPhoneNumber, admissionNumber, currentClass, currentSession, age, profilePhotoUrl } = formState;
   
   const response = await prisma.student.update({
     where: {
@@ -17,7 +17,7 @@ export const updatedRecordSender = async (formState: StudentType3) => {
       lastName: lastName,
       gender: gender,
       parentPhoneNumber: parentPhoneNumber,
-      parentEmail: parentEmail,
+      admissionNumber: admissionNumber,
       currentClass: currentClass,
       currentSession: currentSession,
       age: Number(age),

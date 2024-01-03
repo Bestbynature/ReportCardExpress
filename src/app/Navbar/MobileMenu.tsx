@@ -72,16 +72,9 @@ export default function MobileMenu(user: UserProps) {
           </IconButton>
         </Tooltip>
 
-        <Tooltip title="Account">
-          <IconButton
-            onClick={handleClick}
-            size="small"
-            sx={{ ml: 2 }}
-            aria-controls={open ? 'menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-          >
-            <Avatar sx={{ width: 32, height: 32 }}>
+        <Tooltip title="Profile Picture">
+          
+            <Avatar sx={{ width: 50, height: 50, marginRight: "1.5rem" }}>
               {user && user?.user?.image ? (<Image
                 src={user.user.image}
                 alt={user.user.name}
@@ -89,10 +82,9 @@ export default function MobileMenu(user: UserProps) {
                 height={50}
                 title={user.user.name}
               />) : (
-                <AccountCircleIcon sx={{width: 50, height: 50, marginLeft: "1rem"}} />
+                <AccountCircleIcon sx={{width: 50, height: 50 }} />
               )}
             </Avatar>
-          </IconButton>
         </Tooltip>
       </Box>
 

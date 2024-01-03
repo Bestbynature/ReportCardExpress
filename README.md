@@ -1,6 +1,6 @@
 # 📗 Table of Contents
 - [📗 Table of Contents](#-table-of-contents)
-- [📖 Report Card Express](#-NextMazon-Ecommerce-App)
+- [📖 Report Card Express](#-Report-Card-Express)
   - [🛠 Built With ](#-built-with-)
     - [Tech Stack ](#tech-stack-)
     - [Key Features ](#key-features-)
@@ -20,7 +20,7 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 NextMazon Ecommerce App<a name="NextMazon-Ecommerce-App"></a>
+# 📖 Report-Card-Express<a name="Report-Card-Express"></a>
 
 "ReportCardExpress is your one-stop solution for swiftly and conveniently uploading and distributing school students' academic results. This user-friendly web application streamlines the process of recording and sharing grades and report cards. It empowers educators and administrators to efficiently manage academic records, ensuring that students and parents have prompt access to their performance data. With ReportCardExpress, you can accelerate the grading process and foster improved communication and transparency within the educational community."
 
@@ -62,16 +62,16 @@
 
 - Sign in
 - Sign out
-- Add Product to database
+- Add Student to database
 - Responsive
-- View Products n database
-- View Product details
-- Add to cart
-- Checkout
+- View Students in database
+- View Student details and results
+- Create new results
+- Print and save result as PDF
 
 ### Live Demo <a name="live-demo"></a>
 
-[Live Demo Link](https://nextmazon.vercel.app/)
+not yet deployed
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -111,7 +111,7 @@ To run the project, execute the following command:
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- [x] Payment solution using stripe
+- [x] School fee Payment solution for student using stripe
 - [x] Other Authentication methods apart from Google
 - [x] Implementation of Authorization and privileges
 
@@ -141,7 +141,7 @@ If you like this project please give it a star or [buy me a coffee](https://www.
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
 
-I appreciate [freeCodeCamp](freecodecamp.org) for providing the inspiration for this work.
+I appreciate [Microverse](microverse.org) for providing the inspiration for this work.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

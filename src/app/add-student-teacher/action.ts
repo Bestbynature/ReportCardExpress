@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/db/prisma';
+import bcrypt, { hash } from 'bcrypt';
 
 export const addStudent = async (formData: FormData) => {
 
@@ -15,26 +16,28 @@ export const addStudent = async (formData: FormData) => {
 
   const firstName = formData.get('firstName')?.toString();
   const lastName = formData.get('lastName')?.toString();
-  const parentEmail = formData.get('parentEmail')?.toString();
   const parentPhoneNumber = formData.get('parentPhoneNumber')?.toString();
   const currentClass = formData.get('currentClass')?.toString();
   const age = Number(formData.get('age')) || 0;
   const gender = formData.get('gender')?.toString() || '';
   const profilePhotoUrl = formData.get('profilePhotoUrl')?.toString();
   const currentSession = formData.get('currentSession')?.toString();
+  const admissionNumber = formData.get('admissionNumber')?.toString();
+  // form the username by using firstName.lastName
+  const userName = `${firstName}.${lastName}`.toLowerCase();
 
-  
-
+  let hashedValue = '';
+  if(admissionNumber) hashedValue = await bcrypt.hash(admissionNumber, 10);
 
   try {
     if (
       !firstName ||
       !lastName ||
-      !parentEmail ||
       !parentPhoneNumber ||
       !currentClass ||
       !age ||
-      !currentSession
+      !currentSession ||
+      !hashedValue
     ) {
       throw new Error('All fields are required');
     }
@@ -43,20 +46,21 @@ export const addStudent = async (formData: FormData) => {
       throw new Error('Please upload a profile photo');
     }
 
-    const mailCheck = await prisma.teacher.findFirst({
+    const userNameCheck = await prisma.student.findFirst({
       where: {
-        email: parentEmail
+        admissionNumber: hashedValue
       }
     })
   
-    if(mailCheck) throw new Error('This email has already been used by a Teacher')
+    if(userNameCheck) throw new Error('This student already exist')
 
     const newStudent = await prisma.student.create({
       data: {
         firstName,
         lastName,
-        parentEmail,
         parentPhoneNumber,
+        userName,
+        admissionNumber: hashedValue,
         currentClass,
         age,
         currentSession,
@@ -104,22 +108,10 @@ export const addteacher = async (formData: FormData) => {
     redirect('/api/auth/signin?callbackUrl=/add-student-teacher');
   }
 
-  const firstName = formData.get('firstName')?.toString();
-  const lastName = formData.get('lastName')?.toString();
-  const email = formData.get('parentEmail')?.toString();
-  const gender = formData.get('gender')?.toString();
-
-  if(!firstName || !lastName || !email || !gender) {
-    throw new Error('All fields are required');
-  }
-
-  const mailCheck = await prisma.student.findFirst({
-    where: {
-      parentEmail: email
-    }
-  })
-
-  if(mailCheck) throw new Error('This email is already being used by a Student')
+  const firstName = formData.get('firstName')!.toString() 
+  const lastName = formData.get('lastName')!.toString();
+  const email = formData.get('email')!.toString();
+  const gender = formData.get('gender')!.toString();
 
   const newTeacher = await prisma.teacher.create({
     data: {

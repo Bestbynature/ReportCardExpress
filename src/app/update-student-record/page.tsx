@@ -2,22 +2,21 @@ import React from 'react';
 import UpdateStudentComp from './UpdateClient';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
-import { validateUser } from '../add-student-teacher/page';
 import Unauthorised from '@/components/Unauthorised';
+import LoadingPage from '../loading';
 
 const UpdateStudentServer = async () => {
-  const session = await getServerSession(authOptions)
-  const validity = session? await validateUser(session) : 'noRole'
+  const session = await getServerSession(authOptions);
 
-  if(validity === 'noRole' || validity === 'studentRole'){
-    return (
-      <Unauthorised />
-    )
+  if (session?.user.role !== 'adminRole') {
+    return <Unauthorised />;
   }
-  
+
   return (
     <>
-      <UpdateStudentComp />
+      <React.Suspense fallback={<LoadingPage />}>
+        <UpdateStudentComp />
+      </React.Suspense>
     </>
   );
 };
